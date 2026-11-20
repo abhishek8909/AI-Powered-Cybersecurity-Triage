@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS06: AI-Powered Cybersecurity Triage Console</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div>
+        <h1>AI-Powered Cybersecurity Triage</h1>
+        <p class="subtitle">PS06 SOC Console &mdash; O(n) Alert Deduplication, 18 MITRE ATT&amp;CK Rules &amp; Human-Approved Agent Plans</p>
+      </div>
+      <nav aria-label="Primary navigation" class="primary-nav">
+        <a href="#ingest-section">Ingest Alerts</a>
+        <a href="#metrics-section">Metrics</a>
+        <a href="#incidents-section">Triaged Queue</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="container" tabindex="-1">
+    <div id="error-banner" class="alert-banner error-banner" role="alert" hidden></div>
+    <div id="status-banner" class="alert-banner status-banner" role="status" aria-live="polite" hidden></div>
+
+    <section id="ingest-section" class="panel" aria-labelledby="ingest-heading">
+      <div class="panel-header">
+        <h2 id="ingest-heading">1. Ingest Security Alerts</h2>
+        <div class="button-row">
+          <button type="button" id="load-sample-btn" class="btn btn-secondary">Load Sample SOC Stream</button>
+          <button type="button" id="run-triage-btn" class="btn btn-primary">Run AI Triage</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="alerts-json-input">Raw SIEM / EDR Alert Stream (JSON Array)</label>
+        <p id="alerts-json-help" class="help-text">
+          Paste a JSON array of alert objects (title, description, source_ip, dest_host, user, domain, file_hash, raw_severity) or load the realistic sample SOC stream.
+        </p>
+        <textarea
+          id="alerts-json-input"
+          name="alerts_json"
+          rows="8"
+          aria-describedby="alerts-json-help"
+          spellcheck="false"
+          placeholder='[{"alert_id":"SIEM-1","title":"SSH Brute Force","description":"120 failed logins","source_ip":"91.240.118.172","dest_host":"prod-db-01","raw_severity":"high"}]'
+        ></textarea>
+      </div>
+    </section>
+
+    <section id="metrics-section" class="metrics-grid" aria-labelledby="metrics-heading">
+      <h2 id="metrics-heading" class="sr-only">Triage Summary Metrics</h2>
+      <article class="metric-card">
+        <p class="metric-label">Alerts Ingested</p>
+        <p id="metric-ingested" class="metric-value">0</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-label">Unique Incidents</p>
+        <p id="metric-unique" class="metric-value">0</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-label">Noise Reduction</p>
+        <p id="metric-noise" class="metric-value">0%</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-label">Processing Latency</p>
+        <p id="metric-latency" class="metric-value">0 ms</p>
+      </article>
+    </section>
+
+    <section id="incidents-section" class="panel" aria-labelledby="incidents-heading">
+      <div class="panel-header">
+        <h2 id="incidents-heading" tabindex="-1">2. Prioritized Incident Queue</h2>
+        <div class="filter-bar" role="group" aria-label="Filter incidents by severity">
+          <button type="button" class="filter-btn" data-severity="ALL" aria-pressed="true">All</button>
+          <button type="button" class="filter-btn" data-severity="CRITICAL" aria-pressed="false">Critical</button>
+          <button type="button" class="filter-btn" data-severity="HIGH" aria-pressed="false">High</button>
+          <button type="button" class="filter-btn" data-severity="MEDIUM" aria-pressed="false">Medium</button>
+          <button type="button" class="filter-btn" data-severity="LOW" aria-pressed="false">Low</button>
+        </div>
+      </div>
+
+      <div id="incidents-list" class="incidents-list" aria-live="polite" aria-busy="false">
+        <p class="empty-state">Load the sample SOC stream or paste alerts above, then select <strong>Run AI Triage</strong>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>PS06: AI-Powered Cybersecurity Triage &bull; Containment steps are proposed for human approval only; zero automated execution.</p>
+    </div>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

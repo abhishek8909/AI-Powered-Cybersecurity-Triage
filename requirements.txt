@@ -1,0 +1,2 @@
+# Runtime requires Python 3.11+ standard library only (zero external runtime dependencies).
+# See requirements-dev.txt for optional pytest, coverage, ruff, and mypy tooling.
